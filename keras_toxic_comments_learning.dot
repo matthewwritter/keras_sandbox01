@@ -1,0 +1,24 @@
+digraph G {
+node [shape="record"]
+edge []
+
+data [label="{data|\lattributes\ltarget}"]
+
+data -> test_data
+data -> train_data
+
+train_data -> tokenized
+tokenized -> indexed
+indexed -> embedded
+embedded -> RNN
+RNN -> maxpool
+maxpool -> dense
+dense -> output
+output -> loss_function
+loss_function -> optimizer
+optimizer -> visualization
+optimizer -> trained_model
+
+train_data -> loss_function
+
+}

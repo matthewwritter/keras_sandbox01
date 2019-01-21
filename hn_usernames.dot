@@ -1,0 +1,6 @@
+digraph G {
+        identify_manifest -> list_files -> download_files -> preprocess -> array_format -> apply_w2v -> build_model -> train_model -> test_model [penwidth=2 weight=5]
+        download_w2v -> apply_w2v
+
+        
+}

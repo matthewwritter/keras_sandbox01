@@ -1,0 +1,190 @@
+* KEEP IN MIND
+** i'm not actually using twitter for now
+   It sucks me in too much.
+*** Starting with Kaggle data sets
+*** Then HN
+*** Then Newton Tab
+** Still need to figure out how the data should be structured
+** Remember that an asset gets dramatically more valuable inverse to cost of use
+And people's mental energy is _very_ limited outside of Deep Work time
+One way to create markets is to lower the cost below a threshold that new people can use, including cognitive
+** The Trevor Noah book, and cleantech podcast, remind me of the power of society and government to shape innovation
+** From tabs
+https://files.pushshift.io/hackernews/
+https://machinelearningmastery.com/use-word-embedding-layers-deep-learning-keras/
+https://blog.keras.io/using-pre-trained-word-embeddings-in-a-keras-model.html
+* STEP
+** DONE Installations
+   CLOSED: [2018-12-24 Mon 18:20]
+*** DONE Conda
+    CLOSED: [2018-12-22 Sat 11:50]
+*** DONE Tmux
+    CLOSED: [2018-12-22 Sat 11:50]
+*** DONE Terminator
+    CLOSED: [2018-12-22 Sat 11:51]
+*** DONE Nvidia stuff
+    CLOSED: [2018-12-24 Mon 18:19]
+    I got stuck on the cuda installation for this, but it might have been a different package repository that was blocking me 0
+**** DONE OR
+     CLOSED: [2018-12-24 Mon 18:19]
+***** [[https://hackernoon.com/up-and-running-with-ubuntu-nvidia-cuda-cudnn-tensorflow-and-pytorch-a54ec2ec907d][Hackernoon approach]]
+***** DONE Just `conda install pytorch`
+      CLOSED: [2018-12-24 Mon 18:19]
+      Takes a long time (5-20m?), but 'just works'
+*** DONE PyTorch
+    CLOSED: [2018-12-24 Mon 18:19]
+**** DONE python -c "import torch.cuda; print(torch.cuda.is_available())"
+     CLOSED: [2018-12-24 Mon 18:20]
+*** GPUs again
+    I think tht a very root problem is that I mis-valued PyTorch versus the risk of trynig to get TF as well. In trying to be more risky with my system, for the purposes of understanding it, I have broken something that I don't know how to fix. Its' cost me way more time than expected. At this point, I don't have a clear path forward, and it seems like there's an unbounded cost
+****  I don't know what I'm doing
+sudo apt purge cuda-core-9-0 # This did remove something
+**** PATHS
+     I only need one of these to work
+***** TF
+****** cuda _something_ is not installed, and can't be
+******* I uninstalled and purged cuda-core-9-0, thinking I'd be able to re-install it, but I can't find it
+******* Stuck on final step here just not working: https://developer.nvidia.com/cuda-downloads?target_os=Linux&target_arch=x86_64&target_distro=Ubuntu&target_version=1804&target_type=deblocal
+******** I don't have good insight into `apt` (high level CLI) or `apt-get` (low level CLI)n
+******* I can't find a CLI diagnostic that I /don't/ currently pass. But Keras can't see it, nor can PyTorch
+         python tf_test2.py
+****** I don't know what the complete list of things that you need to install is
+******* Things I've got:
+        Problem is that there's not a clea mapping between what I don't have and what to do about it
+******** gcc and nvrm
+cat /proc/driver/nvidia/version # See Driver information
+NVRM version: NVIDIA UNIX x86_64 Kernel Module  390.87  Tue Aug 21 12:33:05 PDT 2018
+GCC version:  gcc version 7.3.0 (Ubuntu 7.3.0-27ubuntu1~18.04)
+******** nvcc
+nvcc --version
+nvcc: NVIDIA (R) Cuda compiler driver
+Copyright (c) 2005-2017 NVIDIA Corporation
+Built on Fri_Nov__3_21:07:56_CDT_2017
+Cuda compilation tools, release 9.1, V9.1.85
+******** NOT cudann
+ls /usr/local/cuda-9.0/lib64/libcudnn*
+******** maybe cuda-9.0?
+ls /usr/local/cuda-9.0/
+apt search cuda | grep 9.0
+But mine doesn't have a /bin/ like PATH thinks: echo $PATH | grep cuda
+export PATH=/usr/local/cuda-9.0/bin:/usr/lib/nvidia-384/bin${PATH:+:${PATH}}
+
+Nothing in my LD_LIBRARY_PATH actually exists:
+export LD_LIBRARY_PATH=/usr/local/cuda-9.0/lib64:/usr/lib/nvidia-384
+********* Should I maybe install cuda-10.0?
+This suggests 9.2, but his english is not good: https://thecustomizewindows.com/2018/09/how-to-install-pytorch-on-ubuntu-18-04-server-nvidia-gpu/
+Thsi suggests using the .run, and has the advantage of being msot similar to my setup: https://medium.com/@balaprasannav2009/install-tensorflow-pytorch-in-ubuntu-18-04-lts-with-cuda-9-0-for-nvidia-1080-ti-9e45eca99573
+PyTorch thinks you can just use conda (maybe if I delete cuda folder? and all other cuda installs?): https://pytorch.org/get-started/locally/
+ALso suggests .run, claims this is very easy: https://medium.com/@zhanwenchen/install-cuda-and-cudnn-for-tensorflow-gpu-on-ubuntu-79306e4ac04e
+this is for 16.04, so I don't trust ti: https://gist.github.com/wangruohui/df039f0dc434d6486f5d4d098aa52d07
+********** I'm trying it in tf_gpu_test02
+******** NVIDIA graphics driver
+You would isntall it this way:
+sudo add-apt-repository ppa:graphics-drivers/ppa
+sudo apt install nvidia-driver-390
+
+Test with: nvidia-smi
+I've frozen the version with: sudo apt-mark hold nvidia-driver-390
+***** TF Docker
+****** DONE Stuck on this: https://github.com/NVIDIA/nvidia-docker/issues/832
+       CLOSED: [2019-01-12 Sat 16:51]
+****** I think that there's still the same root CUDA issue now
+***** PyTorch
+****** Probably the same as TF
+****
+**
+** TODO Ready-built tutorials
+*** [[https://learning.oreilly.com/videos/image-analysis-and/9781491989968/9781491989968-video319782][Document classification with CNN]]
+    Stopped at 5:30
+**** How do they deal with variable length text?
+**** Using One-hot representation, probably not good enough
+*** DONE [[https://pytorch.org/tutorials/intermediate/char_rnn_classification_tutorial.html][Character level text classification (name nationalities)]]
+    CLOSED: [2018-12-24 Mon 22:15]
+**** DONE Fix Jupyter
+     CLOSED: [2018-12-24 Mon 22:15]
+     Forgot to install with conda, so it was reaching to general version
+*** TODO Kaggle::[For Beginners] Tackling Toxic Using Keras
+    :LOGBOOK:
+    CLOCK: [2019-01-06 Sun 15:05]--[2019-01-14 Mon 18:09] => 195:04
+    :END:
+    Looking for datasets with large number of text entries
+    Still not sure what labeling I'm looking for
+    Need to be able to access the models that were used to solve them, this is a learning exercise
+    Alternative to consider: [[https://www.kaggle.com/knowledgegrappler/a-simple-nn-solution-with-keras-0-48611-pl][A simple NN solution with Keras]], [[https://www.kaggle.com/jrobischon/wikipedia-movie-plots/kernels][Wikipedia movie plots]], [[https://www.kaggle.com/kerneler/starter-google-amazon-and-more-789ee6b6-3][Google and Amazon reviews]]
+**** NOTES
+***** cutting and padding appear to be totally standard to get consistent length
+***** I think that your RNN Layer can return the last `n` results to give you an arbitrary number of outputs
+****** Or maybe not. It's shortening the embedding dimension, not the "setence length" dimension.
+****** I don't know what the alternative to Kera's "return_sequences" argument is
+****** How does GlobalMaxPool1D know which dimension to shorten?
+****** Remember, you can use a multi-node dense layer at the end with sigmoid activation if doing multiple indpt binary classifications (multi-label classification), but need to do softmax if a single classification with >2 choices (Multiclass classification)
+***** So much of confusion is automatic assumptions that are incorrect, but go unreviewed
+***** DONE Make a diagram, any diagram, to capture my learning
+      CLOSED: [2019-01-06 Sun 16:05]
+
+watchmedo shell-command     --patterns="*.dot"     --recursive     --command='dot -Tpng ${watch_src_path} -o output.png'
+use preview to see the file
+See an example with this terminal viewer:
+https://fsteeg.wordpress.com/2006/11/17/uml-class-diagrams-with-graphviz/
+
+
+***** TODO Download the data and run from scratch myself
+****** DOESN"T WORK Install TF and Keras
+       Turns out that TF doesn't work on my machine, even installed with conda, so I'm trying the recommendations here: https://stackoverflow.com/questions/41409842/ubuntu-16-04-cuda-8-cuda-driver-version-is-insufficient-for-cuda-runtime-vers/41410416#41410416
+****** DONE Get PyTorch to actually use CUDA
+       CLOSED: [2019-01-06 Sun 18:27]
+****** Recommendation if issues getting it to work after computer sleeps
+put following 2 lines in your /etc/rc.local:
+
+/usr/bin/nvidia-smi -pm ENABLED
+/usr/bin/nvidia-smi -c EXCLUSIVE_PROCESS
+
+then reboot
+
+Then do these:
+
+sudo rmmod nvidia_uvm
+sudo modprobe nvidia_uvm
+
+Both from: https://askubuntu.com/questions/607118/cuda-not-working-after-returning-laptop-from-sleep
+
+they were not suggested together - should I do a blog post to captuer the traffic that must be coming from this error?
+***
+*** TODO Safari::Deep Learning Using PyTorch::Building a Simple Neural Network
+    :LOGBOOK:
+    CLOCK: [2019-01-01 Tue 17:30]--[2019-01-06 Sun 15:18] => 117:48
+    :END:
+**** I need to figure out whether emacs should go within the terminal
+**** Basically I'm trying to Deliberate Practice the process of understanding things with UML diagrams
+*** TODO [[https://pytorch.org/tutorials/beginner/deep_learning_nlp_tutorial.html][Deep Learning for NLP with PyTorch from PyTorch.org]]
+**** Feed Forward models are the opposite of Sequence models, they treat data as iid
+**** PyTorch LSTM expects all inputs to be 3D tensors: seq X batch x w2v dim
+**** TODO Figure out the final code cell
+*** Fast.ai
+    https://course.fast.ai/start.html
+** Hacker News Usernames
+*** DONE Run on one file
+    CLOSED: [2019-01-19 Sat 16:42]
+*** DONE Scale across many files
+    CLOSED: [2019-01-20 Sun 17:08]
+    CLOCK: [2019-01-19 Sat 17:12]--[2019-01-19 Sat 18:08] =>  0:56
+*** Get
+** Optimization
+*** Set up git for the repository
+*** DONE Tmux
+    CLOSED: [2019-01-01 Tue 17:29]
+**** DONE Better copy mode
+     CLOSED: [2019-01-01 Tue 17:29]
+*** DONE Terminator/bash
+    CLOSED: [2019-01-19 Sat 16:39]
+**** DONE Don't remove failed commands from hitory
+     CLOSED: [2019-01-14 Mon 18:09]
+**** DONE ZSH
+     CLOSED: [2019-01-19 Sat 16:39]
+*** DONE Screen recording
+    CLOSED: [2019-01-19 Sat 16:52]
+*** DONE Emacs is zoomed weird
+    CLOSED: [2019-01-19 Sat 16:52]
+*** DONE pkill usage
+    CLOSED: [2019-01-19 Sat 16:52]
+*** Keyboard

@@ -1,0 +1,26 @@
+digraph G {
+
+	node [
+		shape = "record"
+	]
+
+        NonLinear [
+                label = "{NonLinear | Needed to separate affine transformations }"
+        ]
+
+        ReLU [
+                label = "Zero for negative inputs"
+        ]
+
+
+	ReLU -> NonLinear
+	NonLinear -> Neuron
+	Weights -> Neuron
+	Bias -> Neuron
+
+        edge [
+                headlabel = "1..*  "
+        ]
+
+	Neuron -> Dense_Layer
+}

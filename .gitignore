@@ -1,0 +1,8 @@
+data/
+newsgroups_data/
+dask-worker-space/
+tensorboard_logs/
+.ipynb_checkpoints/
+tutorials/
+output.png
+.#*
