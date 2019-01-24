@@ -168,7 +168,10 @@ they were not suggested together - should I do a blog post to captuer the traffi
 *** DONE Scale across many files
     CLOSED: [2019-01-20 Sun 17:08]
     CLOCK: [2019-01-19 Sat 17:12]--[2019-01-19 Sat 18:08] =>  0:56
-*** Get
+*** Write a dotfile that can be parsed to check for changes
+**** git diff one line
+**** pull out comments in the dotfile into a bash script
+****
 ** Optimization
 *** Set up git for the repository
 *** DONE Tmux

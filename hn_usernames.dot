@@ -1,6 +1,49 @@
 digraph G {
-        identify_manifest -> list_files -> download_files -> preprocess -> array_format -> apply_w2v -> build_model -> train_model -> test_model [penwidth=2 weight=5]
-        download_w2v -> apply_w2v
+        
 
+        find_manifest [label="[manual]\nfind list of datafiles"]
+        subgraph cluster_scripts {
+                label="Scripts \([.py]\)"
+                download_files [label="bulk_file_download.py"]
+                preprocess [label="preprocess.py \n tag and label"]
+                tokenize_and_split [label="tokenize_and_split.py"]
+                create_embedding_matrix [label="create_embedding_matrix.py"]
+                model_code [label="model_code.py"]
+                train
+                edge[style=invis]
+                download_files->preprocess->tokenize_and_split->create_embedding_matrix->model_code->train
+
+        }
+        rdatasets [label="[website]\n/r/datasets"]
+        subgraph cluster_hdd {
+                label="Data on Disk ([jsonl])"
+                zipped_data [label="[gz]\ndatafile*.gz"]
+                preprocessed_text [label="[jsonl]\n preprocessed_text_and_label"]
+                w2v [label="[txt]\nword dim1 dim2 ... dim100"]
+                trained_model_hdd
+                edge[style=invis]
+                zipped_data->preprocessed_text->w2v->trained_model_hdd
+        }
+        subgraph cluster_ram {
+                label="Data in RAM ([np.array])"
+                token_index [label="[dict] token_index {word: embedding_index}"]
+                sequences [label="sequences \n data size x sequence length"]
+                labels [label="labels \n data size x cardinality"]
+                embedding_matrix [label="embedding_matrix \n dmi1 ... dim100 \n in the order of the token_index"]
+                embedding_layer [label="[keras.layer] \n embedding_layer"]
+                other_layers [label="[keras.layer]* \n other_layers"]
+                compiled_model [label="[keras.model] \n compiled_model"]
+                trained_model [label="[keras.model] \n trained_model"]
+                edge[style=invis]
+                token_index->sequences->labels->embedding_matrix->embedding_layer->other_layers->compiled_model->trained_model
+
+        }
+    
+         
+        
+        rdatasets -> find_manifest -> download_files -> zipped_data -> preprocess -> preprocessed_text -> tokenize_and_split -> {sequences, token_index} -> create_embedding_matrix -> embedding_matrix -> model_code -> {embedding_layer, other_layers} -> compiled_model -> train -> {trained_model, trained_model_hdd} [penwidth=2 weight=5]
+        tokenize_and_split -> labels
+        download_w2v -> w2v
+        {sequences, labels} -> train
         
 }

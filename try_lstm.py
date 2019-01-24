@@ -28,7 +28,7 @@ assert len(backend.tensorflow_backend._get_available_gpus()) > 0
 
 # confirm PyTorch sees the GPU
 from torch import cuda
-assert cuda.is_available()  # GIT TEST
+assert cuda.is_available()  # GIT TEST 02
 assert cuda.device_count() > 0
 print(cuda.get_device_name(cuda.current_device()))
 
