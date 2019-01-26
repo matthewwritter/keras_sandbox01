@@ -1,0 +1,26 @@
+digraph G {
+
+index_text [style=filled color=red]
+
+
+download_data -> preprocess_w2v_index -> compile_model -> train_keras -> inference -> test [weight=5 style="invis"]
+
+node [shape=record]
+manifest [label="{[txt]|manifest|List of file URLs}"]
+server [label="{[webserver]|file server|Host of data files for analysis}"]
+downloaded [label="{[JSONL]*|raw data|File(s) with text, label and metadata}"]
+indexed [label="{[HDF5]*|indexed|File(s) with text as indexes for training}"]
+w2v [label="{[Gensim W2V]|w2v|Trained w2v}"]
+model [label="{[Keras model, compiled]|model|Model with randomly initialized weights"]
+model_trained [label="{[Keras model, trained]|trained model|Model with trained weights"]
+
+{manifest server} -> download_data -> downloaded -> preprocess_w2v_index -> {w2v indexed}
+compile_model -> model
+{indexed w2v model} -> train_keras -> model_trained -> inference
+
+
+
+node [shape=note style=filled color=yellow]
+note01 [label="For strings, TFRecords do not seem\nto have a substantial advantage over text"]
+note01 -> downloaded
+}

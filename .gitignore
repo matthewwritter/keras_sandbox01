@@ -8,3 +8,5 @@ output.png
 .#*
 saved_models
 sandbox_data
+temp.tfrecords
+temp.txt
