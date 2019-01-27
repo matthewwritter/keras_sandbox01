@@ -1,4 +1,5 @@
 * KEEP IN MIND
+** My big goal is to increase the ROI of scientific knowledge by finding places where it is valuable
 ** i'm not actually using twitter for now
    It sucks me in too much.
 *** Starting with Kaggle data sets
