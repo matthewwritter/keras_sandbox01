@@ -1,32 +1,45 @@
 digraph G {
 
-index_text [style=filled color=red]
+node [shape=cds style=filled fillcolor=gray]
+
+download_data -> preprocess_txt -> train_w2v -> create_indexed -> compile_model -> train_keras -> inference -> test [weight=100 style="invis"]
 
 
-download_data -> preprocess_w2v_index -> compile_model -> train_keras -> inference -> test [weight=5 style="invis"]
 
-node [shape=record]
+# w2v wants list of prestrings
+
+node [shape=record fillcolor=white]
 manifest [label="{[txt]|manifest|List of file URLs}"]
 server [label="{[webserver]|file server|Host of data files for analysis}"]
 downloaded [label="{[JSONL]*|raw data|File(s) with text, label and metadata}"]
+preprocessed [label="{[TXT]*|preprocessed data|File(s) with text}"]
+labels [label="{[HDF5]*|labels|File(s) with labels and original IDs, in same order as preprocessed}"]
+w2v [label="{[Gensim W2V]|w2v|Maps str to index and vector}"]
 indexed [label="{[HDF5]*|indexed|File(s) with text as indexes for training}"]
-w2v [label="{[Gensim W2V]|w2v|Trained w2v}"]
-model [label="{[Keras model, compiled]|model|Model with randomly initialized weights"]
-model_trained [label="{[Keras model, trained]|trained model|Model with trained weights"]
+model [label="{[Keras model, compiled]|model|Model with randomly initialized weights}"]
+model_trained [label="{[Keras model, trained]|trained model|Model with trained weights}"]
 
-{manifest server} -> download_data -> downloaded -> preprocess_w2v_index -> {w2v indexed}
+{manifest server} -> download_data -> downloaded -> preprocess_txt -> {preprocessed labels} -> train_w2v -> w2v -> create_indexed -> indexed [weight=50]
 compile_model -> model
-{indexed w2v model} -> train_keras -> model_trained -> inference
+{indexed labels w2v model} -> train_keras -> model_trained -> inference
 
 
 
-node [shape=note style=filled color=yellow]
+node [shape=note style=filled fillcolor=yellow]
 note01 [label="For strings, TFRecords do not seem\nto have a substantial advantage over text"]
 #note02 [label="'Here are input words'"]
-note02 [label="{'text':'Here are input words', 'label':'patio11'}"]
-note03 [label="['here', 'are', 'input', 'words']"]
-note04 [label="[4, 23, 0, 32, 0, 0, 0, 0]  # Corresponding to w2v rows"]
-note01 -> downloaded
-note02 -> note03 -> note04 [weight=5 ]
-note04 -> indexed
+note02 [label="{'text':'Here are, some, input words!', 'label':'patio11'}"]
+note03 [label="'here,are,some,input,words'\nNote that punctuation is removed"]
+note04 [label="[4, 23, 0, 32, 0, 0, 0, 0, 0, 0]\nCorresponding to w2v rows"]
+note05 [label="Keras has special functionality\nto stream from HDF5"]
+{note01 note02} -> downloaded
+{note01 note03} -> preprocessed
+{note04 note05} -> indexed
+
+
+# {node [shape=cds style=dotted color=black] preprocess_txt_dotted create_indexed_dotted}
+downloaded -> preprocess_txt -> create_indexed -> test [style=dashed weight=1]
+{model_trained, labels} -> test [style=dashed weight=1]
 }
+
+
