@@ -22,5 +22,11 @@ compile_model -> model
 
 node [shape=note style=filled color=yellow]
 note01 [label="For strings, TFRecords do not seem\nto have a substantial advantage over text"]
+#note02 [label="'Here are input words'"]
+note02 [label="{'text':'Here are input words', 'label':'patio11'}"]
+note03 [label="['here', 'are', 'input', 'words']"]
+note04 [label="[4, 23, 0, 32, 0, 0, 0, 0]  # Corresponding to w2v rows"]
 note01 -> downloaded
+note02 -> note03 -> note04 [weight=5 ]
+note04 -> indexed
 }
