@@ -169,12 +169,17 @@ they were not suggested together - should I do a blog post to captuer the traffi
 *** DONE Scale across many files
     CLOSED: [2019-01-20 Sun 17:08]
     CLOCK: [2019-01-19 Sat 17:12]--[2019-01-19 Sat 18:08] =>  0:56
+*** DONE Download latest comments and check them
+    CLOSED: [2019-02-02 Sat 13:24]
+*** TODO Use pretrained w2v
 *** Write a dotfile that can be parsed to check for changes
 **** git diff one line
 **** pull out comments in the dotfile into a bash script
 ****
+*** Declare victory
 ** Optimization
-*** Set up git for the repository
+*** DONE Set up git for the repository
+    CLOSED: [2019-01-29 Tue 06:33]
 *** DONE Tmux
     CLOSED: [2019-01-01 Tue 17:29]
 **** DONE Better copy mode
@@ -192,3 +197,5 @@ they were not suggested together - should I do a blog post to captuer the traffi
 *** DONE pkill usage
     CLOSED: [2019-01-19 Sat 16:52]
 *** Keyboard
+*** Buy a real monitor as celebration of 'breaking in' the computer
+**** Remember that I'd always intended to use it with an external keyboard and monitor
