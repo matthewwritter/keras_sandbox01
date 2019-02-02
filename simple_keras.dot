@@ -2,7 +2,7 @@ digraph G {
 
 node [shape=cds style=filled fillcolor=gray]
 
-download_data -> preprocess_txt -> train_w2v -> create_indexed -> compile_model -> train_keras -> inference -> test [weight=100 style="invis"]
+download_data -> preprocess_txt -> create_indexed -> compile_model -> train_keras -> inference -> test [weight=100 style="invis"]
 
 
 
@@ -12,15 +12,15 @@ node [shape=record fillcolor=white]
 manifest [label="{[txt]|manifest|List of file URLs}"]
 server [label="{[webserver]|file server|Host of data files for analysis}"]
 downloaded [label="{[JSONL]*|raw data|File(s) with text, label and metadata}"]
-preprocessed [label="{[TXT]*|preprocessed data|File(s) with text}"]
 labels [label="{[HDF5]*|labels|File(s) with labels and original IDs, in same order as preprocessed}"]
 w2v [label="{[Gensim W2V]|w2v|Maps str to index and vector}"]
 indexed [label="{[HDF5]*|indexed|File(s) with text as indexes for training}"]
 model [label="{[Keras model, compiled]|model|Model with randomly initialized weights}"]
 model_trained [label="{[Keras model, trained]|trained model|Model with trained weights}"]
 
-{manifest server} -> download_data -> downloaded -> preprocess_txt -> {preprocessed labels} -> train_w2v -> w2v -> create_indexed -> indexed [weight=50]
+{manifest server} -> download_data -> downloaded -> preprocess_txt -> {labels} -> create_indexed -> indexed [weight=50]
 compile_model -> model
+manual_download_w2v -> w2v
 {indexed labels w2v model} -> train_keras -> model_trained -> inference
 
 
@@ -33,7 +33,6 @@ note03 [label="'here,are,some,input,words'\nNote that punctuation is removed"]
 note04 [label="[4, 23, 0, 32, 0, 0, 0, 0, 0, 0]\nCorresponding to w2v rows"]
 note05 [label="Keras has special functionality\nto stream from HDF5"]
 {note01 note02} -> downloaded
-{note01 note03} -> preprocessed
 {note04 note05} -> indexed
 
 
