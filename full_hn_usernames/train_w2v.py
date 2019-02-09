@@ -1,4 +1,6 @@
-import h5py, bz2, json, re
+import h5py
+
+import logging
 from tqdm import tqdm_notebook as tqdm
 import numpy as np
 
@@ -10,38 +12,31 @@ SKIP_FIRST = 10000
 preprocessed_data = 'preprocessed.txt'
 
 #Knobs
-embedding_dim = 2
+pass
 
 # Output
 w2v_weights_and_word_index_mapping = 'w2v_weights_and_word_index_mapping.h5'
-
-import logging
-from gensim.models import Word2Vec
 
 logger= logging.getLogger()  # Dial
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
 
 
-class W2VIter:
-    def __init__(self, texts):
-        self.texts = texts
-    def __iter__(self):
-        for text in self.texts:
-            yield [token for token in text.split(',') if token != '']
 
-with open(DATADIR+preprocessed_data, 'r') as f:
-    sequences = f.read().split('\n')
-    sequence_length = len(sequences[0])
-    w2viter = W2VIter(sequences)
+with open('w2v/glove.6B.100d.txt', 'r') as f:
+    weights = []
+    word_to_index = {}
+    i = 0
+    for line in f.read().split('\n'):
+        s = line.split()
+        weights.append([float(x) for x in s[1:] if len(s)])
+        word_to_index[s[0]] = i
+        i += 1
 
-w2v = Word2Vec(w2viter, iter=1, min_count=1, size=embedding_dim, workers=2)
-
-weights = np.array([w2v.wv[x] for x in w2v.wv.index2word])
+weights = np.array(weights)
 
 with h5py.File(DATADIR+w2v_weights_and_word_index_mapping, "w") as f:
     f.create_dataset('weights', weights.shape, dtype='f', data=weights)
-    for word in tqdm(w2v.wv.vocab.keys()):
-        f.create_dataset('word_to_index/{}'.format(word), (1,), dtype='int', data=w2v.wv.vocab[word].index)
-    f.create_dataset('metadata/embedding_dim', (1,), dtype='int', data=embedding_dim)
+    for k, v in tqdm(word_to_index.items()):
+        f.create_dataset('word_to_index/{}'.format(k), (1,), dtype='int', data=v)
     f.create_dataset('metadata/max_token', (1,), dtype='int', data=weights.shape[0]+1)
-    f.create_dataset('metadata/sequence_length', (1,), dtype='int', data=sequence_length)
+    f.create_dataset('metadata/embedding_dim', (1,), dtype='int', data=weights.shape[1])

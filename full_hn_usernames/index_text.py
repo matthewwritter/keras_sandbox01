@@ -14,7 +14,7 @@ preprocessed_data = 'preprocessed.txt'
 DATADIR = '/home/mritter/code/twitter_nlp/full_hn_usernames/data/'
 
 # Knobs
-pass
+sequence_length = 300  # This has to be synchronized with model.py
 
 # Output
 indexed_filename = 'indexed.h5'

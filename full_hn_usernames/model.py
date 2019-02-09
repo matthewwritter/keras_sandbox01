@@ -3,7 +3,7 @@ w2v_weights_and_word_index_mapping = 'w2v_weights_and_word_index_mapping.h5'
 training_file = 'indexed.h5'
 
 # Knobs
-pass  # The whole thing, to some extent
+sequence_length = 300
 
 # Outputs
 compiled_model = 'compiled_model.h5'
@@ -19,7 +19,6 @@ with h5py.File(DATADIR+w2v_weights_and_word_index_mapping, "r") as f:
     embedding_matrix = f['weights'][()]
     embedding_dim = f['metadata/embedding_dim'][0]
     num_distinct_words = f['metadata/max_token'][0]
-    sequence_length = f['metadata/sequence_length'][0]
 
 from keras.models import Sequential
 from keras.layers import Dense, Input, Embedding, Flatten, Conv1D, GlobalMaxPooling1D, MaxPooling1D

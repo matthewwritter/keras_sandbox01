@@ -11,3 +11,5 @@ sandbox_data
 temp.tfrecords
 temp.txt
 TEMP
+.idea
+w2v/

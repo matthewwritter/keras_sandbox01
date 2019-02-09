@@ -94,6 +94,22 @@ I've frozen the version with: sudo apt-mark hold nvidia-driver-390
 ****** Probably the same as TF
 ****
 **
+** Hacker News Usernames
+*** DONE Run on one file
+    CLOSED: [2019-01-19 Sat 16:42]
+*** DONE Scale across many files
+    CLOSED: [2019-01-20 Sun 17:08]
+    CLOCK: [2019-01-19 Sat 17:12]--[2019-01-19 Sat 18:08] =>  0:56
+*** DONE Download latest comments and check them
+    CLOSED: [2019-02-02 Sat 13:24]
+****
+*** TODO Use pretrained w2v
+    CLOCK: [2019-02-08 Fri 19:58]
+*** Write a dotfile that can be parsed to check for changes
+**** git diff one line
+**** pull out comments in the dotfile into a bash script
+****
+*** Declare victory
 ** TODO Ready-built tutorials
 *** [[https://learning.oreilly.com/videos/image-analysis-and/9781491989968/9781491989968-video319782][Document classification with CNN]]
     Stopped at 5:30
@@ -163,20 +179,6 @@ they were not suggested together - should I do a blog post to captuer the traffi
 **** TODO Figure out the final code cell
 *** Fast.ai
     https://course.fast.ai/start.html
-** Hacker News Usernames
-*** DONE Run on one file
-    CLOSED: [2019-01-19 Sat 16:42]
-*** DONE Scale across many files
-    CLOSED: [2019-01-20 Sun 17:08]
-    CLOCK: [2019-01-19 Sat 17:12]--[2019-01-19 Sat 18:08] =>  0:56
-*** DONE Download latest comments and check them
-    CLOSED: [2019-02-02 Sat 13:24]
-*** TODO Use pretrained w2v
-*** Write a dotfile that can be parsed to check for changes
-**** git diff one line
-**** pull out comments in the dotfile into a bash script
-****
-*** Declare victory
 ** Optimization
 *** DONE Set up git for the repository
     CLOSED: [2019-01-29 Tue 06:33]
