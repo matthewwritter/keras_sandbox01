@@ -12,7 +12,7 @@ SKIP_FIRST = 10000
 preprocessed_data = 'preprocessed.txt'
 
 #Knobs
-pass
+pass  # Now that we're downloading, there are no knobs
 
 # Output
 w2v_weights_and_word_index_mapping = 'w2v_weights_and_word_index_mapping.h5'

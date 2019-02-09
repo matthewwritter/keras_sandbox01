@@ -20,8 +20,9 @@ indexed [label="{[HDF5]*|indexed|File(s) with text as indexes for training}"]
 model [label="{[Keras model, compiled]|model|Model with randomly initialized weights}"]
 model_trained [label="{[Keras model, trained]|trained model|Model with trained weights}"]
 
-{manifest server} -> download_data -> downloaded -> preprocess_txt -> {preprocessed labels} -> train_w2v -> w2v -> create_indexed -> indexed [weight=50]
+{manifest server} -> download_data -> downloaded -> preprocess_txt -> preprocessed -> train_w2v -> w2v -> create_indexed -> indexed [weight=50]
 compile_model -> model
+preprocess_txt -> labels
 w2v -> {compile_model inference test }
 {indexed labels model} -> train_keras -> model_trained -> inference
 preprocessed -> create_indexed

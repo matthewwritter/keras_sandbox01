@@ -54,14 +54,18 @@ with open(DATADIR+raw_data, 'r') as infile:
 
 with h5py.File(DATADIR+w2v_weights_and_word_index_mapping, "r") as index:
     text_lines = outfile_text.split('\n')
-    sequence_length = index['metadata']['sequence_length'][0]
-    indexed = np.zeros(shape=(len(text_lines)-1, sequence_length))
-    keys = index['word_to_index'].keys()
-    for line_ix, wordlist in tqdm(enumerate(text_lines), total=len(text_lines)):
-        for word_ix, word in enumerate(wordlist.split(',')[:sequence_length]):
-            if word in keys:
-                indexed[line_ix, word_ix] = index['word_to_index'][word][()]
-        break
+
+    tokens = []
+    for x in index['token_list'][()]:
+        try:
+            tokens.append(x.decode('ascii'))
+        except:
+            tokens.append('TOKENNOTFOUND')
+    ix_lookup = dict([(v, i) for i, v in enumerate(tokens)])
+
+    df = dd.read_csv(DATADIR + preprocessed_data, dtype='S')
+    df2 = df.applymap(lambda x: ix_lookup.get(x, 0))
+    indexed = df2.values.compute()
 
 from keras.models import model_from_yaml
 

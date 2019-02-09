@@ -52,3 +52,6 @@ if status == 'training':
     with h5py.File(DATADIR+label_file, "w") as f:
         f.create_dataset('training_labels', (len(labels), 2), dtype='int', data=labels)
         f.create_dataset('ordered_keys', (len(original_ids), 1), dtype='int', data=original_ids)
+
+
+print("Positive labels: {:0.2%}".format(np.mean(np.array(labels)[:, 0])))  # Dial
