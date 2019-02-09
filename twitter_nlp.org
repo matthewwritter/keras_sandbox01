@@ -94,7 +94,7 @@ I've frozen the version with: sudo apt-mark hold nvidia-driver-390
 ****** Probably the same as TF
 ****
 **
-** Hacker News Usernames
+** TODO Hacker News Usernames
 *** DONE Run on one file
     CLOSED: [2019-01-19 Sat 16:42]
 *** DONE Scale across many files
@@ -105,7 +105,8 @@ I've frozen the version with: sudo apt-mark hold nvidia-driver-390
 ****
 *** TODO Use pretrained w2v
     CLOCK: [2019-02-08 Fri 19:58]
-****
+**** Put things in proper functions so that I can reuse them in the test/predict files
+**** Align filenames with dotfile labels
 *** Write a dotfile that can be parsed to check for changes
 **** git diff one line
 **** pull out comments in the dotfile into a bash script

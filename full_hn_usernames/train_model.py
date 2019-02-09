@@ -1,14 +1,14 @@
 # Input
-compiled_model = 'compiled_model.h5'
+compiled_model = 'trained_model03.h5'
 training_file = 'indexed.h5'
 label_file = 'label_and_index.h5'
 
 # Knobs
-epochs = 20
+epochs = 50
 batch_size = 128
 
 # Output
-trained_model = 'trained_model.h5'
+trained_model = 'trained_model04.h5'
 
 
 import h5py
@@ -41,8 +41,8 @@ with h5py.File(DATADIR+training_file, "r") as f1:
 print("training complete")
 
 # Shot in the dark to reduce potential memory issues
-del x_train
-del y_train
+# del x_train
+# del y_train
 
 
 model.save(DATADIR+trained_model)
