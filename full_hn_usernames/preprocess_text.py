@@ -27,6 +27,7 @@ original_ids = []
 
 with open(DATADIR+raw_data, 'r') as infile:
     with open(DATADIR+preprocessed_data, 'w') as outfile:
+        outfile.write(','.join([str(x) for x in range(sequence_length)])+'\n')
         for line in tqdm(infile):  # Dial
             line_json = json.loads(line)
 
@@ -38,8 +39,8 @@ with open(DATADIR+raw_data, 'r') as infile:
             temp_text = temp_text.lower()
             for key, value in tag_patterns.items():
                 temp_text = re.sub(key, value, temp_text)
-            text = re.split(split_regex, re.sub(remove_regex, '', temp_text))
-            text += ['']*(sequence_length-len(text))
+            text = re.split(split_regex, re.sub(remove_regex, '', temp_text))[:sequence_length-1]
+            text += ['']*(sequence_length-len(text)-1)
             text += ['\n']
             outfile.write(','.join(text))
 

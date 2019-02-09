@@ -105,6 +105,7 @@ I've frozen the version with: sudo apt-mark hold nvidia-driver-390
 ****
 *** TODO Use pretrained w2v
     CLOCK: [2019-02-08 Fri 19:58]
+****
 *** Write a dotfile that can be parsed to check for changes
 **** git diff one line
 **** pull out comments in the dotfile into a bash script

@@ -24,6 +24,7 @@ model_trained [label="{[Keras model, trained]|trained model|Model with trained w
 compile_model -> model
 w2v -> {compile_model inference test }
 {indexed labels model} -> train_keras -> model_trained -> inference
+preprocessed -> create_indexed
 
 node [shape=note style=filled fillcolor=yellow]
 note01 [label="For strings, TFRecords do not seem\nto have a substantial advantage over text"]
