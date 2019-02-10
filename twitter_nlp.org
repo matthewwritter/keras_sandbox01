@@ -104,8 +104,8 @@ I've frozen the version with: sudo apt-mark hold nvidia-driver-390
     CLOSED: [2019-02-02 Sat 13:24]
 ****
 *** TODO Use pretrained w2v
-    CLOCK: [2019-02-08 Fri 19:58]
-**** Put things in proper functions so that I can reuse them in the test/predict files
+**** TODO Put things in proper functions so that I can reuse them in the test/predict files
+     CLOCK: [2019-02-10 Sun 14:06]
 **** Align filenames with dotfile labels
 *** Write a dotfile that can be parsed to check for changes
 **** git diff one line
