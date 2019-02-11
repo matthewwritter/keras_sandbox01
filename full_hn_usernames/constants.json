@@ -1,0 +1,6 @@
+{
+  "DATADIR": "/home/mritter/code/twitter_nlp/full_hn_usernames/data/",
+  "test_pct": 0.5,
+  "SKIP_FIRST": 1000,
+  "NUM_SAMPLES": 100000
+}

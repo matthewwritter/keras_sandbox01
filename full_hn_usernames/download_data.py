@@ -52,3 +52,7 @@ def main(
 
     with open(constants['DATADIR'] + raw_data + '_test.jsonl', 'w') as outfile:
         outfile.write('\n'.join(sample_l[:test_ix]))
+
+
+if __name__ == "__main__":
+    main()
