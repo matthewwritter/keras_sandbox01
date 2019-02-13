@@ -1,4 +1,12 @@
+import h5py, json
+import preprocess_text, index_text
+import pandas as pd
+import keras
+
 import requests, datetime
+
+with open('constants.json', 'r') as f:
+    constants = json.load(f)
 
 r = requests.get('https://hacker-news.firebaseio.com/v0/maxitem.json')
 max_id = r.json()
@@ -9,8 +17,8 @@ item_count = 100
 
 dts = []
 
-with open(DATADIR+'predict_texts.txt', 'w') as f:
-    for i in tqdm(range(max_id-item_count, max_id)):
+with open(constants['DATADIR']+'predict_texts.txt', 'w') as f:
+    for i in range(max_id-item_count, max_id):
         r = requests.get(template.format(i))
         item = r.json()
         if item['type'] != 'comment': continue
@@ -20,21 +28,10 @@ with open(DATADIR+'predict_texts.txt', 'w') as f:
         except KeyError:
             pass
 
-print('{:%H:%M}'.format(dt))
-
-
-
-import h5py, json
-import preprocess_text, index_text
-import pandas as pd
-import keras
-
-with open('constants.json', 'r') as f:
-    constants = json.load(f)
-
 trained_model = 'trained_model03.h5'
 indexed_filename='indexed_predict.h5'
 preprocessed_data = 'preprocessed_predict.txt'
+live_predictions = 'live_predictions.csv'
 preprocess_text.main(raw_data='predict_texts.txt', status='predicting', preprocessed_data = preprocessed_data)
 index_text.main(preprocessed_data = preprocessed_data, indexed_filename=indexed_filename)
 
@@ -49,4 +46,6 @@ with open(constants['DATADIR']+preprocessed_data, 'r') as f:
 df = pd.DataFrame({'prob':preds[:, 1], 'text':text_lines[1:-1]})
 high_prob = df.sort_values('prob').head(20)
 for ix, row in high_prob.iterrows():
-    print("[{}] {}\n".format(row.actual, row.text.replace(',', ' ').strip()))
+    print("[{}] {}\n".format(row.text.replace(',', ' ').strip()))
+
+df.to_csv(constants['DATADIR']+live_predictions)

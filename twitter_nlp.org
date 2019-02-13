@@ -105,6 +105,7 @@ I've frozen the version with: sudo apt-mark hold nvidia-driver-390
 ****
 *** TODO Use pretrained w2v
 **** TODO Put things in proper functions so that I can reuse them in the test/predict files
+     CLOCK: [2019-02-13 Wed 06:46]
      CLOCK: [2019-02-10 Sun 14:00]--[2019-02-10 Sun 14:39] =>  0:39
 **** Align filenames with dotfile labels
 **** Add validation data back into training script
