@@ -7,7 +7,7 @@ with open('constants.json', 'r') as f:
 
 def main(
     raw_data = 'raw_data_train.jsonl',
-    status = 'training',
+    status = 'training',  # testing, predicting
     filter_bool = ('type', 'comment'),
     split_regex = r' |\.',
     remove_regex = r"\'|\"|,|\.|\n|\/|&#\d\d;|\(|\)",
@@ -24,13 +24,16 @@ def main(
         with open(constants['DATADIR']+preprocessed_data, 'w') as outfile:
             outfile.write(','.join([str(x) for x in range(sequence_length)])+'\n')
             for line in tqdm(infile):  # Dial
-                line_json = json.loads(line)
+                if status in ('training', 'testing'):
+                    line_json = json.loads(line)
 
-                if line_json[filter_bool[0]] != filter_bool[1]: continue
-                try:
-                    temp_text = line_json['text']
-                except KeyError:
-                    continue
+                    if line_json[filter_bool[0]] != filter_bool[1]: continue
+                    try:
+                        temp_text = line_json['text']
+                    except KeyError:
+                        continue
+                else:
+                    temp_text = line
                 temp_text = temp_text.lower()
                 for key, value in tag_patterns.items():
                     temp_text = re.sub(key, value, temp_text)
