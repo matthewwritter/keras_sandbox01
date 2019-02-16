@@ -1,0 +1,16 @@
+digraph G {
+subgraph cluster_enc {
+    label = encoder
+    color = black
+    input -> conv2d_enc -> flatten_enc -> dense_enc -> {z_mean z_var} -> z_sampled
+}
+
+subgraph cluster_dec {
+    label = decoder
+    color = black
+    dense_dec -> reshape_dec -> conv2d_transpose_dec
+}
+
+z_sampled -> dense_dec
+
+}
