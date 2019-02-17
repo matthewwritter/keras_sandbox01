@@ -1,7 +1,5 @@
 '''Example of VAE on MNIST dataset using CNN
 
-From: https://github.com/PacktPublishing/Advanced-Deep-Learning-with-Keras/blob/7208611eef764273bf5ece01d8ee83b33d73d448/chapter8-vae/vae-cnn-mnist-8.1.2.py
-
 The VAE has a modular design. The encoder, decoder and VAE
 are 3 models that share weights. After training the VAE model,
 the encoder can be used to  generate latent vectors.
@@ -79,7 +77,7 @@ def plot_results(models,
     x_test, y_test = data
     os.makedirs(model_name, exist_ok=True)
 
-    filename = os.path.join(model_name, "vae_mean.png")
+    filename = os.path.join(model_name, "images/vae_mean.png")
     # display a 2D plot of the digit classes in the latent space
     z_mean, _, _ = encoder.predict(x_test,
                                    batch_size=batch_size)
@@ -91,7 +89,7 @@ def plot_results(models,
     plt.savefig(filename)
     plt.show()
 
-    filename = os.path.join(model_name, "digits_over_latent.png")
+    filename = os.path.join(model_name, "images/digits_over_latent.png")
     # display a 30x30 2D manifold of digits
     n = 30
     digit_size = 28
@@ -169,7 +167,7 @@ z = Lambda(sampling, output_shape=(latent_dim,), name='z')([z_mean, z_log_var])
 # instantiate encoder model
 encoder = Model(inputs, [z_mean, z_log_var, z], name='encoder')
 encoder.summary()
-plot_model(encoder, to_file='vae_cnn_encoder.png', show_shapes=True)
+plot_model(encoder, to_file='images/vae_cnn_encoder.png', show_shapes=True)
 
 # build decoder model
 latent_inputs = Input(shape=(latent_dim,), name='z_sampling')
@@ -193,7 +191,7 @@ outputs = Conv2DTranspose(filters=1,
 # instantiate decoder model
 decoder = Model(latent_inputs, outputs, name='decoder')
 decoder.summary()
-plot_model(decoder, to_file='vae_cnn_decoder.png', show_shapes=True)
+plot_model(decoder, to_file='images/vae_cnn_decoder.png', show_shapes=True)
 
 # instantiate VAE model
 outputs = decoder(encoder(inputs)[2])
@@ -224,7 +222,7 @@ if __name__ == '__main__':
     vae.add_loss(vae_loss)
     vae.compile(optimizer='rmsprop')
     vae.summary()
-    plot_model(vae, to_file='vae_cnn.png', show_shapes=True)
+    plot_model(vae, to_file='images/vae_cnn.png', show_shapes=True)
 
     if args.weights:
         vae = vae.load_weights(args.weights)
@@ -234,6 +232,6 @@ if __name__ == '__main__':
                 epochs=epochs,
                 batch_size=batch_size,
                 validation_data=(x_test, None))
-        vae.save_weights('vae_cnn_mnist.h5')
+        vae.save_weights('data/vae_cnn_mnist.h5')
 
     plot_results(models, data, batch_size=batch_size, model_name="vae_cnn")

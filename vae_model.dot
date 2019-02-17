@@ -1,4 +1,5 @@
 digraph G {
+label="Variational AutoEncoder (VAE)"N
 splines=polyline
 node [shape=cds style=filled fillcolor=gray]
 
@@ -9,24 +10,22 @@ subgraph cluster_enc {
         z_mean; z_var; z_sampled
     }
 
-label = encoder
-color = black
-{indexed w2v} -> embedding -> flattened -> dense_enc -> {z_mean z_var} -> z_sampled
+    label = encoder
+    color = black
+    {indexed w2v} -> embedding -> flattened -> dense_layers_enc -> {z_mean z_var} -> z_sampled
 
 }
 
 subgraph cluster_dec {
     label = decoder
     color = black
-    dense_dec -> reshape_dec
+    dense_layers_dec -> reshape_dec
 }
 
-temp [label= "outputs = decoder(encoder(inputs)[2])
-vae = Model(inputs, outputs, name='vae')"]
-temp2 [label="OPTIMIZATION LOOP\nreconstruction_loss = mse(K.flatten(flattened), K.flatten(outputs)" shape=oval style=filled fillcolor=yellow]
+label01 [label="OPTIMIZATION LOOP\nreconstruction_loss = mse(K.flatten(flattened), K.flatten(outputs)" shape=note style=filled fillcolor=yellow]
 
-flattened -> temp2 -> reshape_dec [arrowhead=none style=dashed label="Same dims"]
+flattened -> label01 -> reshape_dec [arrowhead=none style=dashed label="Same dims"]
 
-z_sampled -> dense_dec
+z_sampled -> dense_layers_dec
 
 }

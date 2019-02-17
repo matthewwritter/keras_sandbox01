@@ -103,9 +103,18 @@ I've frozen the version with: sudo apt-mark hold nvidia-driver-390
 *** DONE Download latest comments and check them
     CLOSED: [2019-02-02 Sat 13:24]
 ****
+*** Try Variational Autoencoder
+**** DONE Get it basically working
+     CLOSED: [2019-02-17 Sun 06:54]
+     MAJOR LESSON LEARNED: Trying to apply the embedding outside of the GPU was a bad idea
+     Doing Dask-based index lookup is really hard (maybe impossible?)
+**** Read the paper: https://arxiv.org/abs/1312.6114
+**** TODO Produce some logical results
+     CLOCK: [2019-02-17 Sun 08:04]
+     CLOCK: [2019-02-17 Sun 06:54]--[2019-02-17 Sun 07:55] =>  1:01
+*****
 *** TODO Use pretrained w2v
 **** TODO Put things in proper functions so that I can reuse them in the test/predict files
-     CLOCK: [2019-02-13 Wed 06:46]
      CLOCK: [2019-02-10 Sun 14:00]--[2019-02-10 Sun 14:39] =>  0:39
 **** Align filenames with dotfile labels
 **** Add validation data back into training script
@@ -205,3 +214,5 @@ they were not suggested together - should I do a blog post to captuer the traffi
 *** Keyboard
 *** Buy a real monitor as celebration of 'breaking in' the computer
 **** Remember that I'd always intended to use it with an external keyboard and monitor
+*** How do you see the values in a specific layer of the Keras model?
+    I want to make sure that the values out of flatten() match what I can expect out of sigmoid
